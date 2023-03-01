@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:motion_toast/motion_toast.dart';
 
 class Screen3 extends StatefulWidget {
   const Screen3({super.key});
@@ -13,8 +13,8 @@ class Screen3 extends StatefulWidget {
 class _Screen3State extends State<Screen3> {
   String? _selectedValue = "BMW";
   List<String> _items = [];
-  String? _selectedValue2 = "DDZ-EX-AM";
-  List<String> _items2 = [];
+  String? _selectedValue2 = "코드명(비고)";
+  List<String> _items2 = ["코드명(비고)"];
 
   void fetchItems() async {
     final response = await Dio().get('http://gongdol.ipdisk.co.kr:7777/brands');
@@ -85,7 +85,7 @@ class _Screen3State extends State<Screen3> {
             width: 300,
             child: TextField(
               controller: modelNo,
-              decoration: const InputDecoration(hintText: "모델명을 입력하세요."),
+              decoration: const InputDecoration(hintText: "코드명을 입력하세요."),
             ),
           ),
           const SizedBox(
@@ -102,13 +102,12 @@ class _Screen3State extends State<Screen3> {
                     debugPrint(model);
                     final res = await Dio().get(
                         "http://gongdol.ipdisk.co.kr:443/search.query/$_selectedValue/$model");
-                    List<String> datas = [
-                      'DDZ-EX-AM',
-                    ];
+                    List<String> datas = ["검색결과"];
                     for (Map i in res.data) {
                       datas.add("${i['model no']}(${i['note1']}) ${i['qty']}개");
                     }
                     setState(() {
+                      _selectedValue2 = "검색결과";
                       _items2 = List<String>.from(datas);
                     });
                   },
@@ -118,7 +117,7 @@ class _Screen3State extends State<Screen3> {
           ),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             const Text(
-              "모델명: ",
+              "코드명: ",
               style: TextStyle(fontSize: 20),
             ),
             DropdownButton(
@@ -153,7 +152,7 @@ class _Screen3State extends State<Screen3> {
                             modelno: _selectedValue2?.split("(").first,
                           )));
                 },
-                child: const Text("완료"),
+                child: const Text("선택"),
               ))
         ]),
       ),
@@ -162,9 +161,8 @@ class _Screen3State extends State<Screen3> {
 }
 
 class infoScreen extends StatefulWidget {
-  final modelno;
-  infoScreen({super.key, this.modelno});
-
+  final String? modelno;
+  const infoScreen({super.key, this.modelno});
 
   @override
   State<infoScreen> createState() => _infoScreenState();
@@ -183,11 +181,11 @@ class _infoScreenState extends State<infoScreen> {
 
   late Map<String, String> header;
 
-  void infoapi(String modelno) async {
+  void infoapi(String? modelno) async {
     await Hive.initFlutter();
     var box = await Hive.openBox('auth');
     final response =
-        await Dio().get("http://gongdol.ipdisk.co.kr:443/info/${modelno}");
+        await Dio().get("http://gongdol.ipdisk.co.kr:443/info/$modelno");
     debugPrint(modelno);
     setState(() {
       brandname = response.data["brand name"];
@@ -216,26 +214,121 @@ class _infoScreenState extends State<infoScreen> {
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [const Text("제조사: "), Text(brandname.toString())],
+              children: [
+                const Text(
+                  "제조사: ",
+                  style: TextStyle(fontSize: 20),
+                ),
+                Text(
+                  brandname.toString(),
+                  style: const TextStyle(fontSize: 20),
+                )
+              ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [const Text("코드네임: "), Text(codename.toString())],
+            const SizedBox(
+              height: 15,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("가격(달러): "),
-                Text(price.toString()),
+                const Text(
+                  "코드네임: ",
+                  style: TextStyle(fontSize: 20),
+                ),
+                Text(
+                  codename.toString(),
+                  style: const TextStyle(fontSize: 20),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  "가격(달러): ",
+                  style: TextStyle(fontSize: 20),
+                ),
+                Text(
+                  price.toString(),
+                  style: const TextStyle(fontSize: 20),
+                ),
+              ],
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  "가격(한화): ",
+                  style: TextStyle(fontSize: 20),
+                ),
+                Text(
+                  koprice.toString(),
+                  style: const TextStyle(fontSize: 20),
+                ),
+                const Text(
+                  "원",
+                  style: TextStyle(fontSize: 20),
+                )
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("가격(한화): "),
-                Text(koprice.toString()),
-                const Text("원")
+                const Text(
+                  "수량: ",
+                  style: TextStyle(fontSize: 20),
+                ),
+                Text(
+                  qty.toString(),
+                  style: const TextStyle(fontSize: 20),
+                )
               ],
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  "비고1: ",
+                  style: TextStyle(fontSize: 20),
+                ),
+                Text(
+                  note1.toString(),
+                  style: const TextStyle(fontSize: 20),
+                )
+              ],
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            SizedBox(
+              width: 400,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 300,
+                    child: Text(
+                      "비고2: ${note2.toString()}",
+                      style: const TextStyle(fontSize: 20),
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.visible,
+                      maxLines: 5,
+                    ),
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 15,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -252,57 +345,185 @@ class _infoScreenState extends State<infoScreen> {
                             const InputDecoration(hintText: "수량을 입력해주세요."),
                       )),
                 ),
-                const SizedBox(width: 15,),
+                const SizedBox(
+                  width: 15,
+                ),
                 Column(children: [
-                  Row(children: [
-                    SizedBox(
-                      width: 75,
-                      height: 50,
-                      child: ElevatedButton(
-                          onPressed: () async {
-                            final res = await Dio().get("http://gongdol.ipdisk.co.kr:443/ipgo/1/$codename/${ipgoc.value.text}/$brandname"
-                                , options: Options(headers: header));
-                          }, child: const Text("입고(세트)")),
-                    ),
-                    const SizedBox(width: 10,),
-                    SizedBox(
-                      width: 75,
-                      height: 50,
-                      child: ElevatedButton(
-                          onPressed: () async {
-                            final res = await Dio().get("http://gongdol.ipdisk.co.kr:443/ipgo/0/$codename/${ipgoc.value.text}/$brandname"
-                                , options: Options(headers: header));
-                          }, child: const Text("입고(개별)")),
-                    ),
-                  ],),
-                  const SizedBox(height: 10,),
-                  Row(children: [
-                    SizedBox(
-                      width: 75,
-                      height: 50,
-                      child: ElevatedButton(
-                          onPressed: () async {
-                            final res = await Dio().get("http://gongdol.ipdisk.co.kr:443/out/1/$codename/${ipgoc.value.text}"
-                                , options: Options(headers: header));
-                          }, child: const Text("출고(세트)")),
-                    ),
-                    const SizedBox(width: 10,),
-                    SizedBox(
-                      width: 75,
-                      height: 50,
-                      child: ElevatedButton(
-                          onPressed: () async {
-                            final res = await Dio().get("http://gongdol.ipdisk.co.kr:443/out/0/$codename/${ipgoc.value.text}"
-                            , options: Options(headers: header));
-                            if (res.statusCode == 200){
-
-                            }
-                            else {
-                          }}, child: const Text("출고(개별)")),
-                    ),
-                  ],),
-
-                  
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 75,
+                        height: 50,
+                        child: ElevatedButton(
+                            onPressed: () async {
+                              final res = await Dio().get(
+                                  "http://gongdol.ipdisk.co.kr:443/ipgo/1/$codename/${ipgoc.value.text}/$brandname",
+                                  options: Options(headers: header));
+                              if (res.statusCode == 200) {
+                                MotionToast.success(
+                                  title: const Text(
+                                    '입고 완료',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  description: const Text(
+                                    '입고가 성공적으로 완료되었습니다.',
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                  dismissable: true,
+                                ).show(context);
+                              } else {
+                                MotionToast.error(
+                                  title: const Text(
+                                    '입고 실패',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  description: const Text(
+                                    '입고에 실패하였습니다.',
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                  dismissable: true,
+                                ).show(context);
+                              }
+                            },
+                            child: const Text("입고\n(세트)",
+                                textAlign: TextAlign.center)),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      SizedBox(
+                        width: 75,
+                        height: 50,
+                        child: ElevatedButton(
+                            onPressed: () async {
+                              final res = await Dio().get(
+                                  "http://gongdol.ipdisk.co.kr:443/ipgo/0/$codename/${ipgoc.value.text}/$brandname",
+                                  options: Options(headers: header));
+                              if (res.statusCode == 200) {
+                                MotionToast.success(
+                                  title: const Text(
+                                    '입고 완료',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  description: const Text(
+                                    '입고가 성공적으로 완료되었습니다.',
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                  dismissable: true,
+                                ).show(context);
+                              } else {
+                                MotionToast.error(
+                                  title: const Text(
+                                    '입고 실패',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  description: const Text(
+                                    '입고에 실패하였습니다.',
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                  dismissable: true,
+                                ).show(context);
+                              }
+                            },
+                            child: const Text("입고\n(개별)",
+                                textAlign: TextAlign.center)),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: 75,
+                        height: 50,
+                        child: ElevatedButton(
+                            onPressed: () async {
+                              final res = await Dio().get(
+                                  "http://gongdol.ipdisk.co.kr:443/out/1/$codename/${ipgoc.value.text}",
+                                  options: Options(headers: header));
+                              if (res.statusCode == 200) {
+                                MotionToast.success(
+                                  title: const Text(
+                                    '입고 완료',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  description: const Text(
+                                    '입고가 성공적으로 완료되었습니다.',
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                  dismissable: true,
+                                ).show(context);
+                              } else {
+                                MotionToast.error(
+                                  title: const Text(
+                                    '입고 실패',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  description: const Text(
+                                    '입고에 실패하였습니다.',
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                  dismissable: true,
+                                ).show(context);
+                              }
+                            },
+                            child: const Text("출고\n(세트)",
+                                textAlign: TextAlign.center)),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      SizedBox(
+                        width: 75,
+                        height: 50,
+                        child: ElevatedButton(
+                            onPressed: () async {
+                              final res = await Dio().get(
+                                  "http://gongdol.ipdisk.co.kr:443/out/0/$codename/${ipgoc.value.text}",
+                                  options: Options(headers: header));
+                              if (res.statusCode == 200) {
+                                MotionToast.success(
+                                  title: const Text(
+                                    '입고 완료',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  description: const Text(
+                                    '입고가 성공적으로 완료되었습니다.',
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                  dismissable: true,
+                                ).show(context);
+                              } else {
+                                MotionToast.error(
+                                  title: const Text(
+                                    '입고 실패',
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  ),
+                                  description: const Text(
+                                    '입고에 실패하였습니다.',
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                  dismissable: true,
+                                ).show(context);
+                              }
+                            },
+                            child: const Text(
+                              "출고\n(개별)",
+                              textAlign: TextAlign.center,
+                            )),
+                      ),
+                    ],
+                  ),
                 ])
               ],
             )

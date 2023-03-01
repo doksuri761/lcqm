@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lcqm/login.dart';
-import 'out.dart';
+import 'package:motion_toast/motion_toast.dart';
 import 'in.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -72,11 +72,15 @@ class HomePage extends StatelessWidget {
               height: 100,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => QrScanScreen()),
-
-                  );
+                  MotionToast.info(
+                    title: const Text(
+                      '현재 개발중',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    description: const Text('현재 개발중인 피쳐입니다.🛠'),
+                  ).show(context);
                 },
                 style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(
                     2, 24, 104, 1.0))),
@@ -144,7 +148,7 @@ class Screen4 extends StatelessWidget {
 void islogin() async {
   await Hive.initFlutter();
   var box = await Hive.openBox('auth');
-  if (box.get("auth", defaultValue: "")?.isEmpty ?? false) {
+  if (box.get("auth", defaultValue: "") == "") {
     runApp(const LoginScreen());
   } else {
     runApp(const MyApp());
