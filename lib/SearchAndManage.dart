@@ -398,6 +398,7 @@ class _infoScreenState extends State<infoScreen> {
                         height: 50,
                         child: ElevatedButton(
                             onPressed: () async {
+                              debugPrint(brandname);
                               final res = await Dio().get(
                                   "http://gongdol.ipdisk.co.kr:443/ipgo/0/$codename/${ipgoc.value.text}/$brandname",
                                   options: Options(headers: header));
