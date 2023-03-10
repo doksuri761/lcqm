@@ -3,6 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:motion_toast/motion_toast.dart';
 
+String baseuri = "http://gongdol.ipdisk.co.kr:7777";
+
 class Screen3 extends StatefulWidget {
   const Screen3({super.key});
 
@@ -17,7 +19,7 @@ class _Screen3State extends State<Screen3> {
   List<String> _items2 = ["코드명(비고)"];
 
   void fetchItems() async {
-    final response = await Dio().get('http://gongdol.ipdisk.co.kr:7777/brands');
+    final response = await Dio().get('$baseuri/brands');
     if (response.statusCode == 200) {
       setState(() {
         _items = List<String>.from(response.data["brands"]);
@@ -101,7 +103,7 @@ class _Screen3State extends State<Screen3> {
                     }
                     debugPrint(model);
                     final res = await Dio().get(
-                        "http://gongdol.ipdisk.co.kr:443/search.query/$_selectedValue/$model");
+                        "$baseuri/search.query/$_selectedValue/$model");
                     List<String> datas = ["검색결과"];
                     for (Map i in res.data) {
                       datas.add("${i['model no']}(${i['note1']}) ${i['qty']}개");
@@ -185,7 +187,7 @@ class _infoScreenState extends State<infoScreen> {
     await Hive.initFlutter();
     var box = await Hive.openBox('auth');
     final response =
-        await Dio().get("http://gongdol.ipdisk.co.kr:443/info/$modelno");
+        await Dio().get("$baseuri/info/$modelno");
     debugPrint(modelno);
     setState(() {
       brandname = response.data["brand name"];
@@ -357,7 +359,7 @@ class _infoScreenState extends State<infoScreen> {
                         child: ElevatedButton(
                             onPressed: () async {
                               final res = await Dio().get(
-                                  "http://gongdol.ipdisk.co.kr:443/ipgo/1/$codename/${ipgoc.value.text}/$brandname",
+                                  "$baseuri/ipgo/1/$codename/${ipgoc.value.text}/$brandname",
                                   options: Options(headers: header));
                               if (res.statusCode == 200) {
                                 MotionToast.success(
@@ -400,7 +402,7 @@ class _infoScreenState extends State<infoScreen> {
                             onPressed: () async {
                               debugPrint(brandname);
                               final res = await Dio().get(
-                                  "http://gongdol.ipdisk.co.kr:443/ipgo/0/$codename/${ipgoc.value.text}/$brandname",
+                                  "$baseuri/ipgo/0/$codename/${ipgoc.value.text}/$brandname",
                                   options: Options(headers: header));
                               if (res.statusCode == 200) {
                                 MotionToast.success(
@@ -446,17 +448,17 @@ class _infoScreenState extends State<infoScreen> {
                         child: ElevatedButton(
                             onPressed: () async {
                               final res = await Dio().get(
-                                  "http://gongdol.ipdisk.co.kr:443/out/1/$codename/${ipgoc.value.text}",
+                                  "$baseuri/out/1/$codename/${ipgoc.value.text}",
                                   options: Options(headers: header));
                               if (res.statusCode == 200) {
                                 MotionToast.success(
                                   title: const Text(
-                                    '입고 완료',
+                                    '출고 완료',
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                   description: const Text(
-                                    '입고가 성공적으로 완료되었습니다.',
+                                    '출고가 성공적으로 완료되었습니다.',
                                     style: TextStyle(fontSize: 12),
                                   ),
                                   dismissable: true,
@@ -464,12 +466,12 @@ class _infoScreenState extends State<infoScreen> {
                               } else {
                                 MotionToast.error(
                                   title: const Text(
-                                    '입고 실패',
+                                    '출고 실패',
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                   description: const Text(
-                                    '입고에 실패하였습니다.',
+                                    '출고에 실패하였습니다.',
                                     style: TextStyle(fontSize: 12),
                                   ),
                                   dismissable: true,
@@ -488,17 +490,17 @@ class _infoScreenState extends State<infoScreen> {
                         child: ElevatedButton(
                             onPressed: () async {
                               final res = await Dio().get(
-                                  "http://gongdol.ipdisk.co.kr:443/out/0/$codename/${ipgoc.value.text}",
+                                  "$baseuri/out/0/$codename/${ipgoc.value.text}",
                                   options: Options(headers: header));
                               if (res.statusCode == 200) {
                                 MotionToast.success(
                                   title: const Text(
-                                    '입고 완료',
+                                    '출고 완료',
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                   description: const Text(
-                                    '입고가 성공적으로 완료되었습니다.',
+                                    '출고가 성공적으로 완료되었습니다.',
                                     style: TextStyle(fontSize: 12),
                                   ),
                                   dismissable: true,
@@ -506,12 +508,12 @@ class _infoScreenState extends State<infoScreen> {
                               } else {
                                 MotionToast.error(
                                   title: const Text(
-                                    '입고 실패',
+                                    '출고 실패',
                                     style:
                                         TextStyle(fontWeight: FontWeight.bold),
                                   ),
                                   description: const Text(
-                                    '입고에 실패하였습니다.',
+                                    '출고에 실패하였습니다.',
                                     style: TextStyle(fontSize: 12),
                                   ),
                                   dismissable: true,
