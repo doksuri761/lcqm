@@ -179,6 +179,7 @@ class _infoScreenState extends State<infoScreen> {
   String note2 = '';
   String note1 = '';
   String qty = '';
+
   TextEditingController ipgoc = TextEditingController();
 
   late Map<String, String> header;
@@ -210,7 +211,7 @@ class _infoScreenState extends State<infoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(title: Text("비엠타는 공돌이: 재고관리 시스템"), centerTitle: false),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -338,13 +339,13 @@ class _infoScreenState extends State<infoScreen> {
                 Container(
                   color: Colors.grey[300],
                   child: SizedBox(
-                      width: 200,
+                      width: 100,
                       height: 50,
                       child: TextFormField(
                         controller: ipgoc,
                         keyboardType: TextInputType.number,
                         decoration:
-                            const InputDecoration(hintText: "수량을 입력해주세요."),
+                            const InputDecoration(hintText: "수량 입력"),
                       )),
                 ),
                 const SizedBox(
@@ -357,6 +358,8 @@ class _infoScreenState extends State<infoScreen> {
                         width: 75,
                         height: 50,
                         child: ElevatedButton(
+                            style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(
+                                42, 145, 205, 1.0))),
                             onPressed: () async {
                               final res = await Dio().get(
                                   "$baseuri:443/ipgo/1/$codename/${ipgoc.value.text}/$brandname",
@@ -399,6 +402,8 @@ class _infoScreenState extends State<infoScreen> {
                         width: 75,
                         height: 50,
                         child: ElevatedButton(
+                            style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(
+                                42, 145, 205, 1.0))),
                             onPressed: () async {
                               debugPrint(brandname);
                               final res = await Dio().get(
@@ -446,6 +451,8 @@ class _infoScreenState extends State<infoScreen> {
                         width: 75,
                         height: 50,
                         child: ElevatedButton(
+                            style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(
+                            241, 27, 35, 1.0))),
                             onPressed: () async {
                               final res = await Dio().get(
                                   "$baseuri:443/out/1/$codename/${ipgoc.value.text}",
@@ -488,6 +495,8 @@ class _infoScreenState extends State<infoScreen> {
                         width: 75,
                         height: 50,
                         child: ElevatedButton(
+                            style: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(const Color.fromRGBO(
+                                241, 27, 35, 1.0))),
                             onPressed: () async {
                               final res = await Dio().get(
                                   "$baseuri:443/out/0/$codename/${ipgoc.value.text}",

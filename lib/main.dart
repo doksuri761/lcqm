@@ -52,6 +52,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("비엠타는 공돌이: 재고관리 시스템"),
+        centerTitle: true,
       ),
       body: Center(
         child: Column(
@@ -155,10 +156,10 @@ class Screen4 extends StatelessWidget {
 
 void islogin() async {
   await Hive.initFlutter();
-  runApp(const MyApp());
-  // var box = await Hive.openBox('auth');
-  // if (box.get("auth", defaultValue: "") == "") {
-  //   runApp(const LoginScreen());
-  // } else {
-  // }
+  var box = await Hive.openBox('auth');
+  if (box.get("auth", defaultValue: "") == "") {
+    runApp(const LoginScreen());
+  } else {
+    runApp(const MyApp());
+  }
 }
