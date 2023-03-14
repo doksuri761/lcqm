@@ -198,7 +198,7 @@ class _infoScreenState extends State<infoScreen> {
       note2 = response.data["model name"];
       note1 = response.data["note1"];
       qty = response.data['qty'].toString();
-      header = {"psk": box.get('psk')};
+      header = {"psk": box.get('psk', defaultValue: "null")};
     });
   }
 
@@ -365,6 +365,7 @@ class _infoScreenState extends State<infoScreen> {
                                   "$baseuri:443/ipgo/1/$codename/${ipgoc.value.text}/$brandname",
                                   options: Options(headers: header));
                               if (res.statusCode == 200) {
+                                infoapi(widget.modelno);
                                 MotionToast.success(
                                   title: const Text(
                                     '입고 완료',
@@ -410,6 +411,7 @@ class _infoScreenState extends State<infoScreen> {
                                   "$baseuri:443/ipgo/0/$codename/${ipgoc.value.text}/$brandname",
                                   options: Options(headers: header));
                               if (res.statusCode == 200) {
+                                infoapi(widget.modelno);
                                 MotionToast.success(
                                   title: const Text(
                                     '입고 완료',
@@ -458,6 +460,7 @@ class _infoScreenState extends State<infoScreen> {
                                   "$baseuri:443/out/1/$codename/${ipgoc.value.text}",
                                   options: Options(headers: header));
                               if (res.statusCode == 200) {
+                                infoapi(widget.modelno);
                                 MotionToast.success(
                                   title: const Text(
                                     '출고 완료',
@@ -502,6 +505,7 @@ class _infoScreenState extends State<infoScreen> {
                                   "$baseuri:443/out/0/$codename/${ipgoc.value.text}",
                                   options: Options(headers: header));
                               if (res.statusCode == 200) {
+                                infoapi(widget.modelno);
                                 MotionToast.success(
                                   title: const Text(
                                     '출고 완료',
