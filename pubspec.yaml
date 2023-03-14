@@ -54,6 +54,7 @@ dependencies:
   device_info: ^2.0.3
   crypto: ^3.0.2
   flutter_localization: ^0.1.10
+  fluttertoast: ^8.0.7
 
 
 dev_dependencies:
