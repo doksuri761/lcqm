@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.happyllama.lcqm">
+    package="com.happyllama.lcqm2">
     <application
         android:label="lcqm"
         android:name="${applicationName}"

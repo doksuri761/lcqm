@@ -120,6 +120,17 @@ fonts:
 
 flutter_icons:
   android: true
-  image_path: "assets/icon/icon.png"
-  adaptive_icon_foreground: 'assets/icon/ic_launcher_foreground.png'
-  adaptive_icon_background: 'assets/icon/ic_launcher_foreground.png'
+  image_path: "assets/icon/icon.jpg"
+  ios: true
+  web:
+    generate: true
+    image_path: "assets/icon/icon.jpg"
+    background_color: "#FFD300"
+    theme_color: "#FFD300"
+  windows:
+    generate: true
+    image_path: "assets/icon/icon.jpg"
+    icon_size: 128 # min:48, max:256, default: 48
+  macos:
+    generate: true
+    image_path: "assets/icon/icon.jpg"

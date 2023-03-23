@@ -39,287 +39,333 @@ class _InfoScreenState extends State<InfoScreen> {
             AppBar(title: const Text("비엠타는 공돌이: 재고관리 시스템"), centerTitle: false),
         body: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.2,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    "제조사: ",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  Text(
-                    brandname.toString(),
-                    style: const TextStyle(fontSize: 20),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    "코드네임: ",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  Text(
-                    codename.toString(),
-                    style: const TextStyle(fontSize: 20),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    "가격(달러): ",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  SizedBox(
-                    width: 100,
-                    height: 50,
-                    child: TextFormField(
-                      controller: pricec,
-                      style: const TextStyle(fontSize: 20),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    "가격(한화): ",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  Text(
-                    koprice.toString(),
-                    style: const TextStyle(fontSize: 20),
-                  ),
-                  const Text(
-                    "원",
-                    style: TextStyle(fontSize: 20),
-                  )
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    "수량: ",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  Text(
-                    qty.toString(),
-                    style: const TextStyle(fontSize: 20),
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    "비고1: ",
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  SizedBox(
-                      width: 200,
-                      height: 50,
-                      child: TextFormField(
-                        controller: note1c,
-                      ))
-                ],
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              SizedBox(
-                width: 400,
-                child: Row(
+              Padding(
+                padding: EdgeInsets.fromLTRB(
+                    MediaQuery.of(context).size.width * 0.1, 0.0, 0.0, 0.0),
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
-                      "비고2:",
-                      style: TextStyle(fontSize: 20),
-                    ),
                     SizedBox(
-                        width: 200,
-                        height: 50,
-                        child: TextFormField(
-                          controller: note2c,
-                        ))
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 15,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    color: Colors.grey[300],
-                    child: SizedBox(
-                        width: 100,
-                        height: 50,
-                        child: TextFormField(
-                          controller: ipgoc,
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(hintText: "수량 입력"),
-                        )),
-                  ),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  ElevatedButton(onPressed: () {
-                    String url = "$baseuri:443/edit/$codename/";
-                    if (note1c.value.text != "") {
-                      url += "${note1c.value.text}/";
-                    } else {
-                      url += " /";
-                    }
-                    if (note2c.value.text != "") {
-                      url += "${note2c.value.text}/";
-                    } else {
-                      url += "$note2/";
-                    }
-                    if (pricec.value.text != "") {
-                      url += pricec.value.text;
-                    } else {
-                      url += price;
-                    }
-                    debugPrint(url);
-                    Dio().get(url,
-                        options: Options(headers: header));
-                  }, child: const Text("수정")),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  Column(children: [
+                      height: MediaQuery.of(context).size.height * 0.085,
+                    ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          width: 75,
-                          height: 50,
-                          child: ElevatedButton(
-                              style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all<
-                                          Color>(
-                                      const Color.fromRGBO(42, 145, 205, 1.0))),
-                              onPressed: () async {
-                                final res = await dio.get(
-                                    "$baseuri:443/ipgo/1/$codename/${ipgoc.value.text}/$brandname",
-                                    options: Options(headers: header));
-                                if (res.statusCode == 200) {
-                                  ipgoSuccess(context);
-                                  infoapi(widget.modelno);
-                                } else {
-                                  ipgoError(context);
-                                  ipgoc.value = const TextEditingValue(text: "");
-                                }
-                              },
-                              child: const Text("입고\n(세트)",
-                                  textAlign: TextAlign.center)),
+                        const Text(
+                          "제조사: ",
+                          style: TextStyle(fontSize: 25),
                         ),
-                        const SizedBox(
-                          width: 10,
+                        Text(
+                          brandname.toString(),
+                          style: const TextStyle(fontSize: 25),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "코드네임: ",
+                          style: TextStyle(fontSize: 25),
+                        ),
+                        Text(
+                          codename.toString(),
+                          style: const TextStyle(fontSize: 25),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "가격(달러): ",
+                          style: TextStyle(fontSize: 25),
                         ),
                         SizedBox(
-                          width: 75,
+                          width: 100,
                           height: 50,
-                          child: ElevatedButton(
-                              style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all<
-                                          Color>(
-                                      const Color.fromRGBO(42, 145, 205, 1.0))),
-                              onPressed: () async {
-                                debugPrint(brandname);
-                                final res = await dio.get(
-                                    "$baseuri:443/ipgo/0/$codename/${ipgoc.value.text}/$brandname",
-                                    options: Options(headers: header));
-                                if (res.statusCode == 200) {
-                                  infoapi(widget.modelno);
-                                  ipgoSuccess(context);
-                                } else {
-                                  ipgoError(context);
-                                }
-                              },
-                              child: const Text("입고\n(개별)",
-                                  textAlign: TextAlign.center)),
+                          child: TextFormField(
+                            controller: pricec,
+                            style: const TextStyle(fontSize: 25),
+                          ),
                         ),
                       ],
                     ),
                     const SizedBox(
-                      height: 10,
+                      height: 15,
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        SizedBox(
-                          width: 75,
-                          height: 50,
-                          child: ElevatedButton(
-                              style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all<
-                                          Color>(
-                                      const Color.fromRGBO(241, 27, 35, 1.0))),
-                              onPressed: () async {
-                                final res = await dio.get(
-                                    "$baseuri:443/out/1/$codename/${ipgoc.value.text}",
-                                    options: Options(headers: header));
-                                if (res.statusCode == 200) {
-                                  infoapi(widget.modelno);
-                                  outSuccess(context);
-                                } else {
-                                  outError(context);
-                                }
-                              },
-                              child: const Text("출고\n(세트)",
-                                  textAlign: TextAlign.center)),
+                        const Text(
+                          "가격(한화): ",
+                          style: TextStyle(fontSize: 25),
                         ),
-                        const SizedBox(
-                          width: 10,
+                        Text(
+                          koprice.toString(),
+                          style: const TextStyle(fontSize: 25),
                         ),
-                        SizedBox(
-                          width: 75,
-                          height: 50,
-                          child: ElevatedButton(
-                              style: ButtonStyle(
-                                  backgroundColor: MaterialStateProperty.all<
-                                          Color>(
-                                      const Color.fromRGBO(241, 27, 35, 1.0))),
-                              onPressed: () async {
-                                final res = await dio.get(
-                                    "$baseuri:443/out/0/$codename/${ipgoc.value.text}",
-                                    options: Options(headers: header));
-                                if (res.statusCode == 200) {
-                                  infoapi(widget.modelno);
-                                  outSuccess(context);
-                                } else {
-                                  outError(context);
-                                }
-                              },
-                              child: const Text(
-                                "출고\n(개별)",
-                                textAlign: TextAlign.center,
-                              )),
-                        ),
+                        const Text(
+                          "원",
+                          style: TextStyle(fontSize: 25),
+                        )
                       ],
                     ),
-                  ])
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "수량: ",
+                          style: TextStyle(fontSize: 25),
+                        ),
+                        Text(
+                          qty.toString(),
+                          style: const TextStyle(fontSize: 25),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "비고1: ",
+                          style: TextStyle(fontSize: 25),
+                        ),
+                        SizedBox(
+                            width: 200,
+                            height: 50,
+                            child: TextFormField(
+                              controller: note1c,
+                            ))
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    SizedBox(
+                      width: 400,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "비고2:",
+                            style: TextStyle(fontSize: 25),
+                          ),
+                          SizedBox(
+                              width: 200,
+                              height: 50,
+                              child: TextFormField(
+                                controller: note2c,
+                              ))
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.5,
+                        child: ElevatedButton(
+                            onPressed: () {
+                              String url = "$baseuri:443/edit/$codename/";
+                              if (note1c.value.text != "") {
+                                url += "${note1c.value.text}/";
+                              } else {
+                                url += " /";
+                              }
+                              if (note2c.value.text != "") {
+                                url += "${note2c.value.text}/";
+                              } else {
+                                url += "$note2/";
+                              }
+                              if (pricec.value.text != "") {
+                                url += pricec.value.text;
+                              } else {
+                                url += price;
+                              }
+                              debugPrint(url);
+                              Dio().get(url, options: Options(headers: header));
+                            },
+                            child: const Text("수정")),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Container(
+                        color: Colors.grey[300],
+                        child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.5,
+                            height: 70,
+                            child: TextFormField(
+                              controller: ipgoc,
+                              keyboardType: TextInputType.number,
+                              textAlign: TextAlign.center,
+                              decoration: const InputDecoration(
+                                hintText: "수량 입력",
+                              ),
+                            )),
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const SizedBox(
+                              width: 15,
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 150,
+                                      height: 80,
+                                      child: ElevatedButton(
+                                          style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all<
+                                                          Color>(
+                                                      const Color.fromRGBO(
+                                                          42, 145, 205, 1.0))),
+                                          onPressed: () async {
+                                            final res = await dio.get(
+                                                "$baseuri:443/ipgo/1/$codename/${ipgoc.value.text}/$brandname",
+                                                options:
+                                                    Options(headers: header));
+                                            if (res.statusCode == 200) {
+                                              ipgoSuccess(context);
+                                              infoapi(widget.modelno);
+                                            } else {
+                                              ipgoError(context);
+                                              ipgoc.value =
+                                                  const TextEditingValue(
+                                                      text: "");
+                                            }
+                                          },
+                                          child: const Text("입고\n(세트)",
+                                              textAlign: TextAlign.center)),
+                                    ),
+                                    const SizedBox(
+                                      width: 10,
+                                    ),
+                                    SizedBox(
+                                      width: 150,
+                                      height: 80,
+                                      child: ElevatedButton(
+                                          style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all<
+                                                          Color>(
+                                                      const Color.fromRGBO(
+                                                          42, 145, 205, 1.0))),
+                                          onPressed: () async {
+                                            debugPrint(brandname);
+                                            final res = await dio.get(
+                                                "$baseuri:443/ipgo/0/$codename/${ipgoc.value.text}/$brandname",
+                                                options:
+                                                    Options(headers: header));
+                                            if (res.statusCode == 200) {
+                                              infoapi(widget.modelno);
+                                              ipgoSuccess(context);
+                                            } else {
+                                              ipgoError(context);
+                                            }
+                                          },
+                                          child: const Text("입고\n(개별)",
+                                              textAlign: TextAlign.center)),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        width: 150,
+                                        height: 80,
+                                        child: ElevatedButton(
+                                            style: ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStateProperty.all<
+                                                            Color>(
+                                                        const Color.fromRGBO(
+                                                            241, 27, 35, 1.0))),
+                                            onPressed: () async {
+                                              final res = await dio.get(
+                                                  "$baseuri:443/out/1/$codename/${ipgoc.value.text}",
+                                                  options:
+                                                      Options(headers: header));
+                                              if (res.statusCode == 200) {
+                                                infoapi(widget.modelno);
+                                                outSuccess(context);
+                                              } else {
+                                                outError(context);
+                                              }
+                                            },
+                                            child: const Text("출고\n(세트)",
+                                                textAlign: TextAlign.center)),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      SizedBox(
+                                        width: 150,
+                                        height: 80,
+                                        child: ElevatedButton(
+                                            style: ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStateProperty.all<
+                                                            Color>(
+                                                        const Color.fromRGBO(
+                                                            241, 27, 35, 1.0))),
+                                            onPressed: () async {
+                                              final res = await dio.get(
+                                                  "$baseuri:443/out/0/$codename/${ipgoc.value.text}",
+                                                  options:
+                                                      Options(headers: header));
+                                              if (res.statusCode == 200) {
+                                                infoapi(widget.modelno);
+                                                outSuccess(context);
+                                              } else {
+                                                outError(context);
+                                              }
+                                            },
+                                            child: const Text(
+                                              "출고\n(개별)",
+                                              textAlign: TextAlign.center,
+                                            )),
+                                      ),
+                                    ])
+                              ],
+                            ),
+                          ])
+                    ],
+                  )
                 ],
               )
             ],
