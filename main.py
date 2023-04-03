@@ -33,4 +33,4 @@ def release(version):
 
 
 if __name__ == '__main__':
-    release("v1.0.7")
+    release("v1.0.8")
