@@ -9,7 +9,7 @@ from io import BytesIO
 def release(version):
     url = "https://api.github.com"
     headers = {
-        'Authorization': "token " + os.getenv("GH_TOKEN"),"}
+        'Authorization': "token " + os.getenv("GH_TOKEN")}
     g = github.Github(os.getenv("GH_TOKEN"))
 
     repo = g.get_repo("doksuri761/lcqm")
