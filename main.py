@@ -2,15 +2,17 @@ import github
 import requests
 import platform
 import zipfile
+import sys
 import os
 from io import BytesIO
 
+GH_TOKEN = sys.argv[1]
 
 def release(version):
     url = "https://api.github.com"
     headers = {
-        'Authorization': "token " + os.getenv("GH_TOKEN")}
-    g = github.Github(os.getenv("GH_TOKEN"))
+        'Authorization': "token " + GH_TOKEN}
+    g = github.Github(GH_TOKEN)
 
     repo = g.get_repo("doksuri761/lcqm")
 
