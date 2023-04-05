@@ -1,0 +1,12 @@
+name: build_apk
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: python main.py ${{ env.GH_TOKEN }}
