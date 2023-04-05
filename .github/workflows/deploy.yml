@@ -9,4 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v3.1.3
+        with:
+         python-version: "3.8"
+      - run: pip install github requests
       - run: python main.py ${{ env.GH_TOKEN }}
