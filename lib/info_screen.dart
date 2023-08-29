@@ -47,7 +47,7 @@ class _InfoScreenState extends State<InfoScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.085,
+                      height: MediaQuery.of(context).size.height * 0.025,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -74,7 +74,7 @@ class _InfoScreenState extends State<InfoScreen> {
                         ),
                         Text(
                           codename.toString(),
-                          style: const TextStyle(fontSize: 25),
+                          style: const TextStyle(fontSize: 20),
                         )
                       ],
                     ),
@@ -85,7 +85,7 @@ class _InfoScreenState extends State<InfoScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         const Text(
-                          "가격(달러): ",
+                          "입고: ",
                           style: TextStyle(fontSize: 25),
                         ),
                         SizedBox(
@@ -105,7 +105,7 @@ class _InfoScreenState extends State<InfoScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         const Text(
-                          "가격(한화): ",
+                          "가격: ",
                           style: TextStyle(fontSize: 25),
                         ),
                         Text(

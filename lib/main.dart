@@ -22,7 +22,7 @@ const double width = 0.60;
 void islogin() async {
   await Hive.initFlutter();
   var box = await Hive.openBox('auth');
-  if (box.get("auth", defaultValue: "") == "") {
+  if (box.get("auth", defaultValue: "test") == "") {
     runApp(const LoginScreen());
   } else {
     runApp(const MyApp());
