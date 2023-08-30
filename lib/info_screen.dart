@@ -69,7 +69,7 @@ class _InfoScreenState extends State<InfoScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         const Text(
-                          "코드네임: ",
+                          "코드명: ",
                           style: TextStyle(fontSize: 25),
                         ),
                         Text(
