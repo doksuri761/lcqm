@@ -5,6 +5,7 @@ import 'package:motion_toast/motion_toast.dart';
 import 'package:lcqm/interceptors/manageInterceptor.dart';
 
 String baseuri = "http://gongdol.ipdisk.co.kr";
+double width = 70;
 
 class InfoScreen extends StatefulWidget {
   final String? modelno;
@@ -155,9 +156,7 @@ class _InfoScreenState extends State<InfoScreen> {
                     const SizedBox(
                       height: 15,
                     ),
-                    SizedBox(
-                      width: 400,
-                      child: Row(
+                    Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           const Text(
@@ -172,7 +171,6 @@ class _InfoScreenState extends State<InfoScreen> {
                               ))
                         ],
                       ),
-                    ),
                     const SizedBox(
                       height: 15,
                     ),
@@ -241,7 +239,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                 Row(
                                   children: [
                                     SizedBox(
-                                      width: 150,
+                                      width: width,
                                       height: 80,
                                       child: ElevatedButton(
                                           style: ButtonStyle(
@@ -272,7 +270,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                       width: 10,
                                     ),
                                     SizedBox(
-                                      width: 150,
+                                      width: width,
                                       height: 80,
                                       child: ElevatedButton(
                                           style: ButtonStyle(
@@ -306,7 +304,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       SizedBox(
-                                        width: 150,
+                                        width: width,
                                         height: 80,
                                         child: ElevatedButton(
                                             style: ButtonStyle(
@@ -334,7 +332,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                         width: 10,
                                       ),
                                       SizedBox(
-                                        width: 150,
+                                        width: width,
                                         height: 80,
                                         child: ElevatedButton(
                                             style: ButtonStyle(

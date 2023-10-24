@@ -122,7 +122,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ));
                           var box = Hive.box('auth');
                           final dio = Dio();
-                          String uri = "http://happyllama.sytes.net:8787";
+                          String uri = "http://gongdol.ipdisk.co.kr:8787";
                           final res = await dio.post("$uri/auth/register/nap",
                               queryParameters: {
                                 "psk": pskController?.value.text,
