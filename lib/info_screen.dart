@@ -75,7 +75,7 @@ class _InfoScreenState extends State<InfoScreen> {
                         ),
                         Text(
                           codename.toString(),
-                          style: const TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: 17),
                         )
                       ],
                     ),
@@ -90,7 +90,7 @@ class _InfoScreenState extends State<InfoScreen> {
                           style: TextStyle(fontSize: 25),
                         ),
                         SizedBox(
-                          width: 100,
+                          width: 250,
                           height: 50,
                           child: TextFormField(
                             controller: pricec,
